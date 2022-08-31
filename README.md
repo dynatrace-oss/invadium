@@ -20,7 +20,7 @@ educational purposes.
   environment variables for customization, and the individual commands that will
   be run at each step.
 
-Of course, Invadium is not just build for exploits, you may solve similar
+Of course, Invadium is not only built for exploits, you may solve similar
 problems, e.g., showcasing new users how a tool of yours can be used, getting a
 web UI for a set of commands that developers may regularly encounter, etc.
 
