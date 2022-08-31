@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: invadium-config
+  namespace: invadium
+  labels:
+    app.kubernetes.io/component: config
+    app.kubernetes.io/part-of: invadium
+data:
+  INVADIUM_CONFIG_PATH: /config
+  INVADIUM_API_ROOT: /api
+  INVADIUM_API_PORT: "3001"
+  INVADIUM_CORS_ORIGINS: "[]"
+
+  INVADIUM_EXPLOIT_RUNTIME: "kubernetes"
+  INVADIUM_EXPLOIT_TIMEOUT: "900"
+
+  INVADIUM_DOCKER_NETWORK: ""
+
+  INVADIUM_KUBERNETES_NAMESPACE: "invadium"
+  INVADIUM_KUBERNETES_POD_CPU_REQUESTS: "100m"
+  INVADIUM_KUBERNETES_POD_CPU_LIMITS: "500m"
+  INVADIUM_KUBERNETES_POD_MEMORY_REQUESTS: "250Mi"
+  INVADIUM_KUBERNETES_POD_MEMORY_LIMITS: "500Mi"

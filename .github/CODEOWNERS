@@ -1,0 +1,4 @@
+# This file is used to assign reviewers to PRs based on ownerships
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+* @blu3r4y @Magier @sachleitner

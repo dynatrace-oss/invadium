@@ -1,0 +1,7 @@
+.next
+.swc
+node_modules
+public
+
+*.json
+next-env.d.ts

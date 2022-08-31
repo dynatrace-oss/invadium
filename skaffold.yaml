@@ -1,0 +1,50 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+metadata:
+  name: invadium
+build:
+  artifacts:
+    - image: invadium-backend
+      context: backend
+    - image: invadium-frontend
+      context: frontend
+  local:
+    useBuildkit: true
+deploy:
+  kubectl:
+    manifests:
+      - ./k8s-manifests/backend.yaml
+      - ./k8s-manifests/frontend.yaml
+profiles:
+  - name: localdev
+    activation:
+      - kubeContext: kind-invadium
+    deploy:
+      kubectl:
+        manifests:
+          - ./k8s-manifests/namespace.yaml
+          - ./k8s-manifests/localdev/config.yaml
+          - ./k8s-manifests/localdev/service-account.yaml
+          - ./k8s-manifests/localdev/volume-claim.yaml
+          - ./k8s-manifests/backend.yaml
+          - ./k8s-manifests/frontend.yaml
+          - ./k8s-manifests/localdev/ingress.yaml
+        hooks:
+          after:
+            - host:
+                os: [darwin, linux]
+                command:
+                  [
+                    "/bin/bash",
+                    "-c",
+                    "./k8s-manifests/hooks/copy-data.sh",
+                    "./exploits/config",
+                  ]
+            - host:
+                os: [windows]
+                command:
+                  [
+                    "powershell.exe",
+                    "./k8s-manifests/hooks/copy-data.ps1",
+                    "./exploits/config",
+                  ]

@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  invadium-backend:
+    container_name: invadium-backend
+    image: ghcr.io/dynatrace-oss/invadium-backend:latest
+    build: backend
+    env_file: ./backend/.env
+    environment:
+      - INVADIUM_CONFIG_PATH=/config
+      - INVADIUM_DOCKER_NETWORK=host
+    ports:
+      - 3001:3001
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./exploits/config:/config
+  invadium-frontend:
+    container_name: invadium-frontend
+    image: ghcr.io/dynatrace-oss/invadium-frontend:latest
+    build: frontend
+    env_file: ./frontend/.env.development
+    ports:
+      - 3000:3000

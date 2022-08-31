@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply m-0;
+  }
+
+  html {
+    font-family: Roboto, system-ui, sans-serif;
+  }
+
+  .code {
+    font-family: "Fira Code", monospace;
+  }
+
+  .header {
+    font-family: "Roboto Serif", system-ui, sans-serif;
+  }
+}

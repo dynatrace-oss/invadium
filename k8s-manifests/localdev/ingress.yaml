@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: invadium-ingress
+  namespace: invadium
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/part-of: invadium
+spec:
+  rules:
+    - host: invadium.kube
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: invadium-frontend
+                port:
+                  number: 3000
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: invadium-backend
+                port:
+                  number: 3001
