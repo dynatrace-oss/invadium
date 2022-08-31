@@ -97,8 +97,8 @@ root that is already configured to start both the frontend and backend
 containers correctly configured. Those will not auto-reload, so this is meant
 for quickly testing a production build locally.
 
-By default, or with the `--no-build` argument, it will pull the latest stable
-build of Invadium and start the containers directly.
+With the `--no-build` argument, it will pull the latest stable build of Invadium
+and start the containers directly.
 
 ```sh
 docker-compose up --no-build -d

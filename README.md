@@ -109,7 +109,7 @@ You already have [Docker](https://docs.docker.com/get-docker/) and
 the following command. <sup>1</sup>
 
 ```sh
-docker-compose up -d
+docker-compose up --no-build -d
 ```
 
 - **Browse the frontend at [localhost:3000](http://localhost:3000)**
