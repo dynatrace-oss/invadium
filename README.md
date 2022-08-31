@@ -77,7 +77,7 @@ backend, backed by [FastAPI](https://fastapi.tiangolo.com/).
    new pod is spawned in your namespace.
 2. When you execute individual steps, the backend will run `docker exec` and
    `kubectl exec`, respectively, and stream the logs into the frontend. One
-   exploint container can run one more steps.
+   exploint container can run one or more steps.
 3. When you end your session, or after a certain timeout, the spawned containers
    or pods will be deleted again.
 
@@ -122,7 +122,7 @@ exploit format specification [over here](./docs/EXPLOITS.md) if you want to
 start writing your own!
 
 <small><sup>1</sup> This will pull images from GHCR.io - if you want to re-build
-the containers yourself, add `--build` to the command.</small>
+the containers yourself, use `--build` instead.</small>
 
 ## ⚓ Kubernetes Deployment
 
