@@ -16,7 +16,7 @@ jobs:
   pre-commit-hooks:
     runs-on: ubuntu-latest
     container:
-      image: nikolaik/python-nodejs:python3.10-nodejs18
+      image: docker.io/nikolaik/python-nodejs:python3.10-nodejs18-bullseye@sha256:bca4f40e1ff9118901ff1da302b0d78a2b957fe2da769c36ff660d6e1d4fa75d
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
