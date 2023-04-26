@@ -21,6 +21,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Fix git permissions
+        run: git config --global --add safe.directory $PWD
+
+      - name: Fix cache directory permissions
+        run: |
+          mkdir -p ~/.npm
+          mkdir -p ~/.cache/pip
+          mkdir -p ~/.cache/pre-commit
+          chown -R $USER:$USER ~/.npm
+          chown -R $USER:$USER ~/.cache/pip
+          chown -R $USER:$USER ~/.cache/pre-commit
+
       - name: Cache pip packages
         id: cache-pip
         uses: actions/cache@v3
