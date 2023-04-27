@@ -118,20 +118,21 @@ const ArgsContainer = ({
         return;
       }
       const dict = await res.json();
-      const envVariables = [];
-      const isUrlMap = new Map<string, boolean>();
-      for (const key in dict) {
-        if (Object.prototype.hasOwnProperty.call(dict, key)) {
-          envVariables.push(dict[key]);
-
-          isUrlMap.set(dict[key].value, validURL(dict[key].value));
-        }
-      }
+      const envVariables: EnvVar[] = Object.values(dict);
+      const isUrlMap = createIsUrlMap(envVariables);
       setStepEnvVars(envVariables);
       setIsUrl(isUrlMap);
     };
     fetchStepEnvVars().catch((err) => console.log(err));
   }, [containerId, stepId, exploitScope, BACKEND_API]);
+
+  const createIsUrlMap = (envVariables: EnvVar[]) => {
+    const isUrlMap = new Map<string, boolean>();
+    for (const envVar of envVariables) {
+      isUrlMap.set(envVar.value, validURL(envVar.value));
+    }
+    return isUrlMap;
+  };
 
   const handleSaveButtonClick = async () => {
     for await (const stepEnvVar of stepEnvVars) {
@@ -143,6 +144,7 @@ const ArgsContainer = ({
       );
     }
     enqueueSnackbar("Updated exploit arguments", { variant: "success" });
+    setIsUrl(createIsUrlMap(stepEnvVars));
   };
 
   return (

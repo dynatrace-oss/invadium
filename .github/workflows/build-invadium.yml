@@ -95,20 +95,21 @@ jobs:
 
       - name: Login to GHCR
         uses: docker/login-action@v2
+        if: ${{ github.event_name == 'push' }}
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
+          username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN  }}
 
       - name: Build and push images
         uses: docker/build-push-action@v3
         with:
           context: backend
-          push: ${{ github.event_name != 'pull_request' }}
+          push: ${{ github.event_name == 'push' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=${{ env.BACKEND_IMAGE }}:buildcache
-          cache-to: type=registry,ref=${{ env.BACKEND_IMAGE }}:buildcache,mode=max
+          cache-to: ${{ github.event_name == 'push' && 'type=registry,ref=${{ env.BACKEND_IMAGE }}:buildcache,mode=max' || '' }}
 
   build-frontend:
     needs: pre-commit-hooks
@@ -135,17 +136,18 @@ jobs:
 
       - name: Login to GHCR
         uses: docker/login-action@v2
+        if: ${{ github.event_name == 'push' }}
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
+          username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN  }}
 
       - name: Build and push images
         uses: docker/build-push-action@v3
         with:
           context: frontend
-          push: ${{ github.event_name != 'pull_request' }}
+          push: ${{ github.event_name == 'push' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=${{ env.FRONTEND_IMAGE }}:buildcache
-          cache-to: type=registry,ref=${{ env.FRONTEND_IMAGE }}:buildcache,mode=max
+          cache-to: ${{ github.event_name == 'push' && 'type=registry,ref=${{ env.FRONTEND_IMAGE }}:buildcache,mode=max' || '' }}
