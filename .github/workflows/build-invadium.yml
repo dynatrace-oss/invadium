@@ -98,7 +98,7 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN  }}
 
       - name: Build and push images
@@ -109,7 +109,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=${{ env.BACKEND_IMAGE }}:buildcache
-          cache-to: ${{ github.event_name == 'push' && 'type=registry,ref=${{ env.BACKEND_IMAGE }}:buildcache,mode=max' || '' }}
+          cache-to: ${{ github.event_name == 'push' && format('type=registry,ref={0}:buildcache,mode=max', env.BACKEND_IMAGE) || '' }}
 
   build-frontend:
     needs: pre-commit-hooks
@@ -139,7 +139,7 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN  }}
 
       - name: Build and push images
@@ -150,4 +150,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=${{ env.FRONTEND_IMAGE }}:buildcache
-          cache-to: ${{ github.event_name == 'push' && 'type=registry,ref=${{ env.FRONTEND_IMAGE }}:buildcache,mode=max' || '' }}
+          cache-to: ${{ github.event_name == 'push' && format('type=registry,ref={0}:buildcache,mode=max', env.FRONTEND_IMAGE) || '' }}
